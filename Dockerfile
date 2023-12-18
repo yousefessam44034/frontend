@@ -11,13 +11,19 @@ COPY ./public /app/public
 COPY package*.json /app/
 # Install app dependencies
 
-# Change ownership of the npm cache directory
-RUN mkdir -p /home/node/.npm
-RUN chown -R 1002120000:0 /home/node/.npm
+# Create the npm cache directory and change ownership
+RUN mkdir -p /home/node/.npm && \
+    chown -R 1002120000:0 /home/node/.npm
+
+# Change the ownership of the working directory
+RUN chown -R 1002120000:0 /app
 
 USER node
 
-RUN npm install
+# Set npm cache directory
+ENV NPM_CONFIG_CACHE=/home/node/.npm
+
+RUN npm install --loglevel=verbose
 
 RUN npm run build
 # Expose the port the app runs on
