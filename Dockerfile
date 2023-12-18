@@ -11,11 +11,10 @@ COPY ./public /app/public
 COPY package*.json /app/
 # Install app dependencies
 
-# Change ownership of /.npm folder
-USER root
-RUN chown -R 1002120000:0 "/.npm"
+# Change ownership of the npm cache directory
+RUN mkdir -p /home/node/.npm
+RUN chown -R 1002120000:0 /home/node/.npm
 
-# Switch back to the non-root user for the rest of the build
 USER node
 
 RUN npm install
