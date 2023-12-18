@@ -5,15 +5,18 @@ FROM node:latest
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
+COPY ./src /app/src
+COPY ./public /app/public
+
 COPY package*.json /app/
-COPY .. /app
-
-COPY ./public /app/
-
-ARG REACT_APP_BACKEND_URL
-ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
-
 # Install app dependencies
+
+# Change ownership of /.npm folder
+USER root
+RUN chown -R 1002120000:0 "/.npm"
+
+# Switch back to the non-root user for the rest of the build
+USER node
 
 RUN npm install
 
