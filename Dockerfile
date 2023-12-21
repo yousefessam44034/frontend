@@ -1,7 +1,7 @@
 FROM node:latest
 
-# Create a non-root user
-RUN groupadd -r node && useradd -m -r -g node node
+# Use the existing node group
+RUN useradd -m -r -g node node
 
 WORKDIR /app
 
