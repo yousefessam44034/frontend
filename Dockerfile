@@ -1,8 +1,5 @@
 FROM node:latest
 
-# Use the existing node group
-RUN useradd -m -r -g node node
-
 WORKDIR /app
 
 # Copy package files and set permissions
