@@ -12,6 +12,7 @@ RUN npm install
 
 # Copy the content of the local src directory to the working directory
 COPY src/ ./src/
+COPY public/ ./public/
 
 # Expose port 3000 to the outside world
 EXPOSE 3000
