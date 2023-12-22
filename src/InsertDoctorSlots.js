@@ -18,7 +18,7 @@ function InsertDoctorSlots() {
 
   const handleInsertDoctorSlots = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/insert_doctor_slots', formData);
+      const response = await axios.post('http://backend:6000/insert_doctor_slots', formData);
       if (response.data.message === "Doctor's slot added successfully") {
         setMessage("Doctor's slot added successfully");
       } else {
