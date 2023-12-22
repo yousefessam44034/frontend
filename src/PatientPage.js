@@ -11,6 +11,10 @@ const PatientPage = ({ location }) => {
   const [error, setError] = useState(null); // New state to track fetch errors
   const [selectedPatientAppointments, setSelectedPatientAppointments] = useState([]);
   const [appointmentIdToDelete, setAppointmentIdToDelete] = useState(''); // Add this line for the new state
+
+
+
+
   const [patientUsernameInput, setPatientUsernameInput] = useState('');
   const [daySlotInput, setDaySlotInput] = useState('');
   const [timeSlotInput, setTimeSlotInput] = useState('');
@@ -18,7 +22,7 @@ const PatientPage = ({ location }) => {
   const handleBookAppointmentWithInputs = async () => {
     try {
       // Use the input values instead of state values
-      const response = await fetch('http://localhost:5000/patient_appointment', {
+      const response = await fetch('http://backend:6000/patient_appointment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +64,7 @@ const PatientPage = ({ location }) => {
 
   const fetchAvailableDoctors = async () => {
     try {
-      const response = await fetch('http://localhost:5000/get_doctors', {
+      const response = await fetch('http://backend:6000/get_doctors', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +84,7 @@ const PatientPage = ({ location }) => {
 
   const fetchDoctorAppointments = async (doctorUsername) => {
     try {
-      const response = await fetch('http://localhost:5000/view_doctor_slots', {
+      const response = await fetch('http://backend:6000/view_doctor_slots', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +107,7 @@ const PatientPage = ({ location }) => {
 
   const fetchPatients = async () => {
     try {
-      const response = await fetch('http://localhost:5000/get_patients', {
+      const response = await fetch('http://backend:6000/get_patients', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +136,7 @@ const PatientPage = ({ location }) => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/cancel_appointment', {
+      const response = await fetch('http://backend:6000/cancel_appointment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -162,7 +166,7 @@ const PatientPage = ({ location }) => {
 
   const fetchPatientAppointments = async (patientUsername) => {
     try {
-      const response = await fetch('http://localhost:5000/get_patient_appointments', {
+      const response = await fetch('http://backend:6000/get_patient_appointments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -221,7 +225,7 @@ const PatientPage = ({ location }) => {
 
   const handleBookAppointment = async (dayOfWeek, timeSlot) => {
     try {
-      const response = await fetch('http://localhost:5000/patient_appointment', {
+      const response = await fetch('http://backend:6000/patient_appointment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
