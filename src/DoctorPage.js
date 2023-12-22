@@ -7,10 +7,11 @@ const DoctorPage = () => {
   const [timeSlot, setTimeSlot] = useState('');
   const [message, setMessage] = useState('');
   const [doctorSlots, setDoctorSlots] = useState([]);
+  const [doctorNotifications, setDoctorNotifications] = useState([]);
 
   const handleAddSlot = async () => {
     try {
-      const response = await fetch('http://localhost:5000/insert_doctor_slots', {
+      const response = await fetch('http://backend:6000/insert_doctor_slots', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,6 +22,19 @@ const DoctorPage = () => {
           time_slot: timeSlot,
         }),
       });
+
+
+
+  const handleFetchDoctorNotifications = async () => {
+      try {
+        const response = await fetch(`http://backend:6000/doctor_notifications?doctor_username=${username}`);
+        const data = await response.json();  
+        setDoctorNotifications(data.doctor_messages || []);
+          } catch (error) {
+            console.error('Error fetching doctor notifications:', error);
+          }
+        };
+
 
       const data = await response.json();
 
@@ -38,7 +52,7 @@ const DoctorPage = () => {
 
   const fetchDoctorSlots = async () => {
     try {
-      const response = await fetch('http://localhost:5000/view_doctor_slots', {
+      const response = await fetch('http://backend:6000/view_doctor_slots', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +106,7 @@ const DoctorPage = () => {
           )}
         </tbody>
       </table>
-
+      
       <div>
         <h2>Create a new slot</h2>
         <div>
@@ -125,6 +139,17 @@ const DoctorPage = () => {
           </button>
         </div>
         {message && <p>{message}</p>}
+      </div>
+      <div>
+        <h2>Doctor Notifications</h2>
+        <button type="button" onClick={handleFetchDoctorNotifications}>
+          Fetch Doctor Notifications
+        </button>
+        <ul>
+          {doctorNotifications.map((notification, index) => (
+            <li key={index}>{notification.message}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
