@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
+# Fix npm cache permissions
+RUN sudo chown -R 1002120000:0 "/.npm"
+
 # Install dependencies
 RUN npm install
 
