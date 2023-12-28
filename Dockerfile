@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
+# Change ownership of the npm cache directory
+RUN mkdir /.npm && chown -R 1002120000:0 /.npm
+
 # Install dependencies
 RUN npm install
 
