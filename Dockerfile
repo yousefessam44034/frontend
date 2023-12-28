@@ -1,26 +1,27 @@
-# Use the official Node.js image as a base image
-FROM node:latest
+# Stage 1: Build the application
+FROM node:latest AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Create a non-root user
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
-
-# Set ownership of the application directory to the non-root user
-RUN chown -R appuser:appgroup /app
-
-# Switch to the non-root user
-USER appuser
-
-# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the container
 COPY . .
+
+# Build the application
+RUN npm run build
+
+# Stage 2: Create a smaller image for running the application
+FROM node:alpine
+
+WORKDIR /app
+
+# Copy only the necessary files from the builder stage
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
 
 # Expose the port on which the app will run
 EXPOSE 3000
