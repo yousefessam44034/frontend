@@ -4,15 +4,8 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /app
 
-# Add a non-root user to avoid permission issues
-RUN groupadd -r app && useradd --no-log-init -r -g app app
-RUN chown -R app:app /app
-
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
-
-# Switch to the non-root user
-USER app
 
 # Install dependencies
 RUN npm install
